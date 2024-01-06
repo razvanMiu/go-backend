@@ -1,0 +1,25 @@
+info:
+  contact: {}
+paths:
+  /api/auth:
+    get:
+      consumes:
+      - application/json
+      description: Get user details
+      produces:
+      - application/json
+      responses: {}
+      summary: Get user
+      tags:
+      - Auth
+  /api/auth/signup:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses: {}
+      summary: Signup
+      tags:
+      - Auth
+swagger: "2.0"
