@@ -14,5 +14,6 @@ func initAuth(router *gin.Engine) {
 		routes.POST("/signup", auth.Signup)
 		// routes.POST("/login", auth.Login)
 		// routes.PATCH("/patch", auth.Patch)
+		routes.GET("/ws", auth.WS)
 	}
 }

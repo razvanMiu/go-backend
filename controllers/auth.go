@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"sirius/config"
 	"sirius/models"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -74,4 +75,26 @@ func (a Auth) Signup(c *gin.Context) {
 		"email":    user.Email,
 		"username": user.Username,
 	})
+}
+
+func (a Auth) WS(c *gin.Context) {
+	conn, err := config.WSUpgrader.Upgrade(c.Writer, c.Request, nil)
+	if err != nil {
+		return
+	}
+	defer conn.Close()
+	go func() {
+		conn.ReadMessage()
+	}()
+	i := 0
+	for {
+		i++
+		err := conn.WriteJSON(gin.H{
+			"i": i,
+		})
+		if err != nil {
+			return
+		}
+		time.Sleep(time.Second)
+	}
 }
