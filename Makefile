@@ -13,6 +13,13 @@ else
 	air
 endif
 
+swag:
+ifeq ($(shell which swag),)
+	echo "swag is not installed, follow swag installation guide: https://github.com/swaggo/swag?tab=readme-ov-file#getting-started"
+else
+	swag init
+endif
+
 test:
 	go test -coverprofile=coverage.out
 
