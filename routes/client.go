@@ -16,13 +16,14 @@ type WWW struct {
 func (d WWW) Open(name string) (http.File, error) {
 	// Clean path
 	path := filepath.Clean(name)
-	// Check if file exists
+	// Check if file exists as html
 	f, err := d.d.Open(path + ".html")
 	if os.IsNotExist(err) {
-		// Not found, try with .html
+		// Not found, try to open the original path
 		if f, err := d.d.Open(path); err == nil {
 			return f, nil
 		}
+		// TODO: if path is folder, try to open index.html inside
 	}
 	return f, err
 }
