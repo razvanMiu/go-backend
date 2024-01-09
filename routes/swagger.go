@@ -4,12 +4,10 @@ import (
 	"sirius/config"
 	"sirius/docs"
 
-	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/gofiber/swagger"
 )
 
-func initSwagger(router *gin.Engine) {
+func initSwagger() {
 	// Swagger 2.0 Meta Information
 	docs.SwaggerInfo.Title = "REST API"
 	docs.SwaggerInfo.Version = "1.0"
@@ -18,5 +16,7 @@ func initSwagger(router *gin.Engine) {
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 	// Swagger 2.0 routes
-	router.GET("/api/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	config.App.Get("/api/docs/*", swagger.New(swagger.Config{ // custom
+		DocExpansion: "list",
+	}))
 }

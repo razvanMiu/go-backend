@@ -1,19 +1,15 @@
 package routes
 
 import (
+	"sirius/config"
 	"sirius/controllers"
-
-	"github.com/gin-gonic/gin"
 )
 
-func initAuth(router *gin.Engine) {
+func initAuth() {
 	auth := controllers.Auth{}
-	router.GET("/api/auth", auth.GetUser)
-	routes := router.Group("/api/auth")
-	{
-		routes.POST("/signup", auth.Signup)
-		// routes.POST("/login", auth.Login)
-		// routes.PATCH("/patch", auth.Patch)
-		routes.GET("/ws", auth.WS)
-	}
+	router := config.App.Group("/api/auth")
+
+	router.Get("/", auth.GetUser)
+	// router.Get("/ws", auth.WS)
+	router.Post("/signup", auth.Signup)
 }

@@ -3,8 +3,6 @@ package config
 import (
 	"fmt"
 	"os"
-
-	"github.com/gin-gonic/gin"
 )
 
 var Settings struct {
@@ -19,7 +17,7 @@ func initSettings() {
 	port := os.Getenv("PORT")
 
 	// Set development mode
-	development := os.Getenv(gin.EnvGinMode) == "debug"
+	development := os.Getenv("MODE") == "debug"
 
 	// Set host
 	if development {

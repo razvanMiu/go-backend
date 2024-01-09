@@ -64,10 +64,10 @@ export default function About({ params }: { params: { id: string } }) {
 }
 
 export async function generateStaticParams() {
-  const blogs = await fetch('http://localhost:8080/blogs', {
-    next: { revalidate: 0 },
-  })
-  const response = await blogs.json()
+  // const blogs = await fetch('http://localhost:8080/blogs', {
+  //   next: { revalidate: 0 },
+  // })
+  // const response = await blogs.json()
 
-  return response.results
+  return [{ id: '1' }, { id: '2' }]
 }
