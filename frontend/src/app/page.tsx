@@ -2,9 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default async function Home() {
-  const articles = await fetch('http://localhost:8080/api/articles').then(
-    (res) => res.json(),
-  )
+  const articles = await fetch(
+    `${process.env.NEXT_PUBLIC_API_PATH}/api/articles`,
+  ).then((res) => res.json())
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

@@ -1,6 +1,103 @@
+definitions:
+  controllers.Article:
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
+  /api/articles:
+    delete:
+      description: Delete all articles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete articles
+      tags:
+      - Articles
+    get:
+      description: Get list of articles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.Article'
+            type: array
+      summary: Get articles
+      tags:
+      - Articles
+  /api/articles/{id}:
+    delete:
+      description: Delete article
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete article
+      tags:
+      - Articles
+    get:
+      description: Get article by id
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.Article'
+      summary: Get article
+      tags:
+      - Articles
+  /api/articles/add:
+    post:
+      description: Add new article
+      parameters:
+      - description: Title
+        in: formData
+        name: title
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controllers.Article'
+            type: array
+      summary: Add article
+      tags:
+      - Articles
   /api/auth:
     get:
       consumes:

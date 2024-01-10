@@ -12,9 +12,6 @@ clean:
 	rm -rf ./frontend/out
 
 dev:
-ifeq ($(wildcard ./frontend/out), )
-	cd frontend && npm run build && cd ..
-endif
 ifeq ($(shell which air),)
 	echo "air is not installed, follow air installation guide: https://github.com/cosmtrek/air?tab=readme-ov-file#installation"
 else
@@ -25,6 +22,7 @@ swag:
 ifeq ($(shell which swag),)
 	echo "swag is not installed, follow swag installation guide: https://github.com/swaggo/swag?tab=readme-ov-file#getting-started"
 else
+	swag fmt
 	swag init
 endif
 

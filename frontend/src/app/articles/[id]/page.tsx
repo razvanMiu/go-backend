@@ -2,9 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default async function Article({ params }: { params: { id: string } }) {
-  const articles = await fetch('http://localhost:8080/api/articles').then(
-    (res) => res.json(),
-  )
+  const articles = await fetch(
+    `${process.env.NEXT_PUBLIC_API_PATH}/api/articles`,
+  ).then((res) => res.json())
 
   const article = articles.find((article: any) => article.id === params.id)
 
@@ -71,11 +71,11 @@ export default async function Article({ params }: { params: { id: string } }) {
 }
 
 export async function generateStaticParams() {
-  const data = await fetch('http://localhost:8080/api/articles').then((res) =>
-    res.json(),
-  )
+  const articles = await fetch(
+    `${process.env.NEXT_PUBLIC_API_PATH}/api/articles`,
+  ).then((res) => res.json())
 
-  return data.map((article: any) => ({
+  return articles.map((article: any) => ({
     id: article.id,
   }))
 }

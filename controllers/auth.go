@@ -13,22 +13,22 @@ type Auth struct {
 	models.User
 }
 
-// @Summary Get user
-// @Description Get user details
-// @Tags Auth
-// @Accept json
-// @Produce json
-// @Router /api/auth [get]
+//	@Summary		Get user
+//	@Description	Get user details
+//	@Tags			Auth
+//	@Accept			json
+//	@Produce		json
+//	@Router			/api/auth [get]
 func (a Auth) GetUser(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{"id": 1, "username": "test"})
 }
 
-// @Summary Signup
-// @Description
-// @Tags Auth
-// @Accept json
-// @Produce json
-// @Router /api/auth/signup [post]
+//	@Summary	Signup
+//	@Description
+//	@Tags		Auth
+//	@Accept		json
+//	@Produce	json
+//	@Router		/api/auth/signup [post]
 func (a Auth) Signup(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{"signup": "success"})
 }
