@@ -1,15 +1,16 @@
 package routes
 
 import (
-	"sirius/config"
 	"sirius/controllers"
+
+	"github.com/gofiber/contrib/websocket"
 )
 
 func initAuth() {
 	auth := controllers.Auth{}
-	router := config.App.Group("/api/auth")
+	router := api.Group("/auth")
 
 	router.Get("/", auth.GetUser)
-	// router.Get("/ws", auth.WS)
+	router.Get("/ws", websocket.New(auth.WS))
 	router.Post("/signup", auth.Signup)
 }

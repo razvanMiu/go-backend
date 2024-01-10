@@ -10,5 +10,5 @@ func main() {
 	config.InitConfig()
 	routes.InitRoutes()
 
-	log.Fatal(config.App.Listen(":8080"))
+	log.Fatal(config.App.Listen("127.0.0.1:" + config.Settings.Port))
 }

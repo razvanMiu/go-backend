@@ -1,8 +1,11 @@
 package controllers
 
 import (
+	"log"
 	"sirius/models"
+	"time"
 
+	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -30,29 +33,29 @@ func (a Auth) Signup(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{"signup": "success"})
 }
 
-// func (a Auth) WS(c *fiber.Ctx) error {
-// 	if websocket.IsWebSocketUpgrade(c) {
-// 		c.Locals("allowed", true)
-// 		return c.Next()
-// 	}
-// 	return fiber.ErrUpgradeRequired
-// 	// conn, err := config.WSUpgrader.Upgrade(c.Writer, c.Request, nil)
-// 	// if err != nil {
-// 	// 	return
-// 	// }
-// 	// defer conn.Close()
-// 	// go func() {
-// 	// 	conn.ReadMessage()
-// 	// }()
-// 	// i := 0
-// 	// for {
-// 	// 	i++
-// 	// 	err := conn.WriteJSON(gin.H{
-// 	// 		"i": i,
-// 	// 	})
-// 	// 	if err != nil {
-// 	// 		return
-// 	// 	}
-// 	// 	time.Sleep(time.Second)
-// 	// }
-// }
+func (a Auth) WS(c *websocket.Conn) {
+	closeCh := make(chan bool)
+
+	go func() {
+		if _, _, err := c.ReadMessage(); err != nil {
+			log.Println("Reading:", err)
+			closeCh <- true
+		}
+	}()
+
+Loop:
+	for {
+		select {
+		case <-closeCh:
+			break Loop
+
+		default:
+			if err := c.WriteMessage(websocket.TextMessage, []byte("Hello World!")); err != nil {
+				log.Println("Writing:", err)
+				return
+			}
+		}
+		time.Sleep(time.Second)
+	}
+
+}

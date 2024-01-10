@@ -1,7 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Home() {
+export default async function Home() {
+  const articles = await fetch('http://localhost:8080/api/articles').then(
+    (res) => res.json(),
+  )
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -49,13 +53,17 @@ export default function Home() {
           <h2 className={`mb-3 text-2xl font-semibold`}>Home</h2>
         </Link>
 
-        <Link
-          href="/about"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>About</h2>
-        </Link>
+        {articles.map((article: any) => (
+          <Link
+            prefetch={false}
+            key={article.id}
+            href={`/articles/${article.id}`}
+            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+            rel="noopener noreferrer"
+          >
+            <h2 className={`mb-3 text-2xl font-semibold`}>{article.title}</h2>
+          </Link>
+        ))}
       </div>
     </main>
   )

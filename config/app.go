@@ -7,7 +7,6 @@ var App *fiber.App
 func InitConfig() {
 	loadEnv()
 	initDB()
-	initWebsocket()
 	initSettings()
 	initApp()
 }

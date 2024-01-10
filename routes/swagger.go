@@ -16,7 +16,7 @@ func initSwagger() {
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 	// Swagger 2.0 routes
-	config.App.Get("/api/docs/*", swagger.New(swagger.Config{ // custom
+	api.Get("/docs/*", swagger.New(swagger.Config{
 		DocExpansion: "list",
 	}))
 }
